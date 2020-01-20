@@ -72,9 +72,13 @@ struct T
 struct Compare                                //4
 {
     T* compare(T* a, T* b) //5
-    { FIXME: What do we always check before using a pointer?
-        if( a->value < b->value ) return a;
-        if( a->value > b->value ) return b;
+    { 
+        if(a != nullptr && b != nullptr)
+        {
+            if( a->value < b->value ) return a;
+            if( a->value > b->value ) return b;
+            
+        }
         return nullptr;
     }
 };
@@ -96,19 +100,24 @@ struct U
 struct Reduce
 {
     static float reduceAndMultiplyFunction(U* that, float* update)        //10
-    { FIXME: What do we always check before using a pointer?
-        std::cout << "U's num1 value: " << that->num1 << std::endl;
-        that->num1 = *update;
-        std::cout << "U's num1 updated value: " << that->num1 << std::endl;
-        while( std::abs(that->num2 - that->num1) > 0.001f )
+    { 
+        float result = 0.0f;
+        if(that != nullptr && update != nullptr)
         {
-            /*
-             write something that makes the distance between that->num2 and that->num1 get smaller
-             */
-            that->num2 += 0.1f ;
+            std::cout << "U's num1 value: " << that->num1 << std::endl;
+            that->num1 = *update;
+            std::cout << "U's num1 updated value: " << that->num1 << std::endl;
+            while( std::abs(that->num2 - that->num1) > 0.001f )
+            {
+                /*
+                write something that makes the distance between that->num2 and that->num1 get smaller
+                */
+                that->num2 += 0.1f ;
+            }
+            std::cout << "U's num2 updated value: " << that->num2 << std::endl;
+            result = that->num2 * that->num1;
         }
-        std::cout << "U's num2 updated value: " << that->num2 << std::endl;
-        return that->num2 * that->num1;
+    return result;
     }
 };
         
@@ -119,9 +128,11 @@ int main()
     
     Compare f;                                            //7
     auto* smaller = f.compare(&t1, &t2);                              //8
-    FIXME: What do we always check before using pointers?
+    if(smaller != nullptr)
+    {
     std::cout << "the smaller one is << " << smaller->name << std::endl; //9
-    
+    }
+
     U u;
     float updatedValue = 5.f;
     std::cout << "Reduce's multiplied values: " << Reduce::reduceAndMultiplyFunction(&u, &updatedValue)  << std::endl;                  //11
