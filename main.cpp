@@ -77,7 +77,6 @@ struct Compare                                //4
         {
             if( a->value < b->value ) return a;
             if( a->value > b->value ) return b;
-            
         }
         return nullptr;
     }
@@ -86,7 +85,7 @@ struct Compare                                //4
 struct U
 {
     float num1 { 0 }, num2 { 0 };
-    float uReduceAndMultiplyFunction(float* update)      //12
+    float reduceAndMultiplyFunction(float* update)      //12
     {
         num1 = *update;
         while( std::abs(num2 - num1) > 0.001f )
@@ -117,7 +116,7 @@ struct Reduce
             std::cout << "U's num2 updated value: " << that->num2 << std::endl;
             result = that->num2 * that->num1;
         }
-    return result;
+        return result;
     }
 };
         
@@ -130,7 +129,7 @@ int main()
     auto* smaller = f.compare(&t1, &t2);                              //8
     if(smaller != nullptr)
     {
-    std::cout << "the smaller one is << " << smaller->name << std::endl; //9
+        std::cout << "the smaller one is << " << smaller->name << std::endl; //9
     }
 
     U u;
@@ -138,7 +137,7 @@ int main()
     std::cout << "Reduce's multiplied values: " << Reduce::reduceAndMultiplyFunction(&u, &updatedValue)  << std::endl;                  //11
     
     U u1;
-    std::cout << "U's multiplied values: " << u1.uReduceAndMultiplyFunction( &updatedValue ) << std::endl;
+    std::cout << "U's multiplied values: " << u1.reduceAndMultiplyFunction( &updatedValue ) << std::endl;
 
 }       
 
