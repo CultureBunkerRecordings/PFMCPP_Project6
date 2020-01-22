@@ -30,7 +30,7 @@ struct T
 
 struct Compare                                //4
 {
-    const T& compare(const T& a, const T& b) //5
+    const T& compare(const T& a, const T& b) FIXME nope, this doesn't satisfy 1) 
     { 
         if( a.value < b.value ) return a;
         else return b;
@@ -76,8 +76,8 @@ int main()
     T t2(31, "Emma");                                             //6
     
     Compare f;                                            //7
-    auto smaller = f.compare(t1, t2);                              //8
-    std::cout << "the smaller one is << " << smaller.name << std::endl; //9
+    auto smaller = f.compare(t1, t2); FIXME also broke this...                             //
+    std::cout << "the smaller one is << " << smaller.name << std::endl; FIXME and therefore this..
 
     U u;
     float updatedValue = 5.f;
