@@ -30,23 +30,19 @@ struct T
 
 struct Compare                                //4
 {
-    T* compare(T* a, T* b) //5
+    const T& compare(const T& a, const T& b) //5
     { 
-        if(a != nullptr && b != nullptr)
-        {
-            if( a->value < b->value ) return a;
-            if( a->value > b->value ) return b;
-        }
-        return nullptr;
+        if( a.value < b.value ) return a;
+        else return b;
     }
 };
 
 struct U
 {
     float num1 { 0 }, num2 { 0 };
-    float reduceAndMultiplyFunction(float* update)      //12
+    float reduceAndMultiplyFunction(const float& update)      //12
     {
-        num1 = *update;
+        num1 = update;
         while( std::abs(num2 - num1) > 0.001f )
         {
             num2 += 0.1f ;
@@ -57,25 +53,20 @@ struct U
 
 struct Reduce
 {
-    static float reduceAndMultiplyFunction(U* that, float* update)        //10
+    static float reduceAndMultiplyFunction(U& that, const float& update)        //10
     { 
-        float result = 0.0f;
-        if(that != nullptr && update != nullptr)
+        std::cout << "U's num1 value: " << that.num1 << std::endl;
+        that.num1 = update;
+        std::cout << "U's num1 updated value: " << that.num1 << std::endl;
+        while( std::abs(that.num2 - that.num1) > 0.001f )
         {
-            std::cout << "U's num1 value: " << that->num1 << std::endl;
-            that->num1 = *update;
-            std::cout << "U's num1 updated value: " << that->num1 << std::endl;
-            while( std::abs(that->num2 - that->num1) > 0.001f )
-            {
-                /*
-                write something that makes the distance between that->num2 and that->num1 get smaller
-                */
-                that->num2 += 0.1f ;
-            }
-            std::cout << "U's num2 updated value: " << that->num2 << std::endl;
-            result = that->num2 * that->num1;
+            /*
+            write something that makes the distance between that->num2 and that->num1 get smaller
+            */
+            that.num2 += 0.1f ;
         }
-        return result;
+        std::cout << "U's num2 updated value: " << that.num2 << std::endl;
+        return that.num2 * that.num1;
     }
 };
         
@@ -85,18 +76,15 @@ int main()
     T t2(31, "Emma");                                             //6
     
     Compare f;                                            //7
-    auto* smaller = f.compare(&t1, &t2);                              //8
-    if(smaller != nullptr)
-    {
-        std::cout << "the smaller one is << " << smaller->name << std::endl; //9
-    }
+    auto smaller = f.compare(t1, t2);                              //8
+    std::cout << "the smaller one is << " << smaller.name << std::endl; //9
 
     U u;
     float updatedValue = 5.f;
-    std::cout << "Reduce's multiplied values: " << Reduce::reduceAndMultiplyFunction(&u, &updatedValue)  << std::endl;                  //11
+    std::cout << "Reduce's multiplied values: " << Reduce::reduceAndMultiplyFunction(u, updatedValue)  << std::endl;                  //11
     
     U u1;
-    std::cout << "U's multiplied values: " << u1.reduceAndMultiplyFunction( &updatedValue ) << std::endl;
+    std::cout << "U's multiplied values: " << u1.reduceAndMultiplyFunction( updatedValue ) << std::endl;
 
 }       
 
