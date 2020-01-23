@@ -30,10 +30,10 @@ struct T
 
 struct Compare                                //4
 {
-    T* compare(T* a, T* b) 
-    { 
-        if( a->value < b->value ) return a;
-        if( a->value > b->value ) return b;
+    T* compare(T& a, T& b) 
+    {
+        if( a.value < b.value ) return &a;
+        if( a.value > b.value ) return &b;
         return nullptr; 
     }
 };
@@ -77,7 +77,7 @@ int main()
     T t2(31, "Emma");                                             //6
     
     Compare f;                                            //7
-    auto smaller = f.compare(&t1, &t2);  //
+    auto smaller = f.compare(t1, t2);  //
     std::cout << "the smaller one is << " << smaller->name << std::endl;
 
     U u;
