@@ -77,9 +77,13 @@ int main()
     T t2(31, "Emma");                                             //6
     
     Compare f;                                            //7
-    auto smaller = f.compare(t1, t2);  //
-    std::cout << "the smaller one is << " << smaller->name << std::endl;
 
+    auto smaller = f.compare(t1, t2);  //
+
+    if(smaller != nullptr)
+    {
+        std::cout << "the smaller one is << " << smaller->name << std::endl;
+    }
     U u;
     float updatedValue = 5.f;
     std::cout << "Reduce's multiplied values: " << Reduce::reduceAndMultiplyFunction(u, updatedValue)  << std::endl;                  //11
