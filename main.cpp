@@ -25,7 +25,9 @@ struct T
 {
     T(int v, const char* n): value(v), name(n){}//1
     int value;//2
+    char padding[4] = {};
     std::string name;//3
+    
 };
 
 struct Compare                                //4
